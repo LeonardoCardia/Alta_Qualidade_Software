@@ -18,3 +18,11 @@ class ClienteService:
         f.close()
         print("enviando email de boas vindas para", c["email"])
         return True
+
+    # def processar_clientes():
+    #     for c in clientes:
+    #         ok = cadastrar_cliente(c)
+    #         if ok:
+    #             print("cliente ok:", c["nome"])
+    #         else:
+    #             print("cliente com problema:", c)

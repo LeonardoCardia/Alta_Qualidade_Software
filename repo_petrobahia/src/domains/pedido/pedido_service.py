@@ -4,6 +4,14 @@ class PedidoService:
     def __init__(self):
         return
     
+    # def processar_pedidos():
+    #     for p in pedidos:
+    #         v = processar_pedido(p)
+    #         valores.append(v)
+    #         print("pedido:", p, "-- valor final:", v)
+
+    #     return valores = []
+    
     def processar_pedido(p):
         prod = p.get("produto")
         qtd = p.get("qtd")
