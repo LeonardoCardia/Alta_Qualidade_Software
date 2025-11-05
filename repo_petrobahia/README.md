@@ -1,15 +1,17 @@
 # PetroBahia S.A.
 
-A **PetroBahia S.A.** é uma empresa fictícia do setor de óleo e gás. Seu sistema interno calcula preços de combustíveis, valida clientes e gera relatórios. 
+A **PetroBahia S.A.** é uma empresa fictícia do setor de óleo e gás. Seu sistema interno calcula preços de combustíveis, valida clientes e gera relatórios.
 O código está **mal estruturado** e **difícil de manter**. O objetivo é **refatorar** aplicando **PEP8**, **Clean Code** e **princípios SOLID** (SRP e OCP).
 
 ## Objetivos
+
 - Melhorar legibilidade e clareza do código
 - Extrair funções e classes coesas
 - Eliminar duplicações e efeitos colaterais
 - Melhorar nomes e modularidade
 
 ## Estrutura
+
 ```
 src/
 ├── main.py
@@ -20,6 +22,7 @@ src/
 ```
 
 ## Instruções
+
 1. Leia o código legado.
 2. Liste os problemas encontrados.
 3. Refatore sem mudar o comportamento principal.
@@ -28,4 +31,8 @@ src/
 ---
 
 ## DECISÕES DE DESIGN
+
 Descreva aqui as mudanças feitas e os motivos.
+
+- O projeto será desenvolvido utilizando a arquitetura hexagonal
+- Domínios separados de acordo com as regras de negócio
