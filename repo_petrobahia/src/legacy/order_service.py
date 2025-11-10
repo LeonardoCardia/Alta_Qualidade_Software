@@ -9,29 +9,29 @@ def process_order(order):
         print("Qty zero, returning 0")
         return 0
 
-    preco = calculate_price(product, quantity)
-    if preco < 0:
+    price = calculate_price(product, quantity)
+    if price < 0:
         print("Error: negative price")
-        preco = 0
+        price = 0
 
     if voucher == "MEGA10":
-        preco = preco - (preco * 0.1)
+        price = price - (price * 0.1)
     else:
         if voucher == "NOVO5":
-            preco = preco - (preco * 0.05)
+            price = price - (price * 0.05)
         else:
             if voucher == "LUB2" and product == "lubricant":
-                preco = preco - 2
+                price = price - 2
             else:
-                preco = preco
+                price = price
 
     if product == "diesel":
-        preco = round(preco, 0)
+        price = round(price, 0)
     else:
         if product == "gas":
-            preco = round(preco, 2)
+            price = round(price, 2)
         else:
-            preco = float(int(preco * 100) / 100.0)
+            price = float(int(price * 100) / 100.0)
 
-    print("Order OK:", order["client"], product, quantity, "=>", preco)
-    return preco
+    print("Order OK:", order["client"], product, quantity, "=>", price)
+    return price

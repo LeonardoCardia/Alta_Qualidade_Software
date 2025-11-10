@@ -5,36 +5,36 @@ BASES = {
     "lubricant": 25.0,
 }
 
-def calculate_price(type, qty):
+def calculate_price(type, quantity):
     if type == "diesel":
-        if qty > 1000:
-            price = (BASES["diesel"] * qty) * 0.9
+        if quantity > 1000:
+            price = (BASES["diesel"] * quantity) * 0.9
         else:
-            if qty > 500:
-                price = (BASES["diesel"] * qty) * 0.95
+            if quantity > 500:
+                price = (BASES["diesel"] * quantity) * 0.95
             else:
-                price = BASES["diesel"] * qty
+                price = BASES["diesel"] * quantity
         print("Calc diesel", price)
         return price
     else:
         if type == "gas":
-            if qty > 200:
-                price = (BASES["gas"] * qty) - 100
+            if quantity > 200:
+                price = (BASES["gas"] * quantity) - 100
             else:
-                price = BASES["gas"] * qty
+                price = BASES["gas"] * quantity
             print("Calc gas", price)
             return price
         else:
             if type == "ethanol":
-                price = BASES["ethanol"] * qty
-                if qty > 80:
+                price = BASES["ethanol"] * quantity
+                if quantity > 80:
                     price = price * 0.97
                 print("Calc ethanol", price)
                 return price
             else:
                 if type == "lubricant":
                     x = 0
-                    for i in range(qty):
+                    for i in range(quantity):
                         x = x + BASES["lubricant"]
                     return x
                 else:
