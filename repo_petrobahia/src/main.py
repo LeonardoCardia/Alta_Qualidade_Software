@@ -26,7 +26,7 @@ order_value = []
 for order in orders:
     value = process_order(order)
     order_value.append(value)
-    print("Order:", order, "-- final cost: ", v)
+    print("Order:", order, "-- final cost: ", value)
 
 print("TOTAL = ", sum(order_value))
 print("==== Fim processamento PetroBahia ====")
