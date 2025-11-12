@@ -1,8 +1,6 @@
 """
-Module for client data management.
-
-This module provides functionality to load and manage client information
-from text files.
+Gerenciamento de dados de clientes.
+Carrega e valida informações de clientes a partir de arquivos de texto.
 """
 
 import re
@@ -12,17 +10,8 @@ REGEX_EMAIL = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
 
 def load_clients(file_path):
     """
-    Load client data from a text file.
-
-    Args:
-        file_path (str): Path to the file containing client data.
-
-    Returns:
-        list: A list of dictionaries containing client information.
-              Each dictionary has 'name', 'email', and 'tier' keys.
-
-    Raises:
-        FileNotFoundError: If the specified file does not exist.
+    Carrega clientes do arquivo CSV com formato: nome,email,tier.
+    Ignora linhas malformadas silenciosamente.
     """
     clients = []
 
@@ -38,103 +27,69 @@ def load_clients(file_path):
                     }
                     clients.append(client)
     except FileNotFoundError as exc:
-        raise FileNotFoundError(f"Client file not found: {file_path}") from exc
+        raise FileNotFoundError(
+            f"Arquivo de clientes não encontrado: {file_path}"
+        ) from exc
 
     return clients
 
 
 class ClientValidator:
-    """Validates client data including email format and required fields."""
+    """Valida campos obrigatórios e formato de email dos clientes."""
 
     @staticmethod
     def validate_email(email):
-        """Validate email format using regex."""
+        """Verifica se email possui formato válido (user@domain.com)."""
         return bool(re.match(REGEX_EMAIL, email))
 
     def validate(self, client):
         """
-        Validate client data.
-
-        Args:
-            client (dict): Client dictionary with 'email' and 'name' keys.
-
-        Returns:
-            bool: True if client data is valid, False otherwise.
+        Verifica se cliente possui 'name' e 'email' válidos.
+        Imprime erro no console caso falhe.
         """
         if "email" not in client or "name" not in client:
-            print("Missing mandatory fields")
+            print("Campos obrigatórios faltando")
             return False
         if not self.validate_email(client["email"]):
-            print("Invalid email format")
+            print("Formato de email inválido")
             return False
         return True
 
 
 class ClientRepository:
-    """Repository for persisting client data to file."""
+    """Persiste clientes em arquivo de texto no formato de dicionário Python."""
 
     def __init__(self, file_path="clients.txt"):
-        """
-        Initialize repository with file path.
-
-        Args:
-            file_path (str): Path to the clients file.
-        """
+        """Define o caminho do arquivo de persistência."""
         self.file_path = file_path
 
     def save(self, client):
-        """
-        Save client data to file.
-
-        Args:
-            client (dict): Client dictionary to save.
-        """
+        """Adiciona cliente ao final do arquivo usando str(dict)."""
         with open(self.file_path, "a", encoding="utf-8") as file:
             file.write(str(client) + "\n")
 
     def load_all(self):
-        """
-        Load all clients from file.
-
-        Returns:
-            list: List of client dictionaries.
-        """
+        """Retorna todos os clientes do arquivo no formato CSV."""
         return load_clients(self.file_path)
 
 
 class EmailService:
-    """Service for sending emails to clients."""
+    """Simula envio de emails (apenas imprime no console)."""
 
     @staticmethod
     def send_greeting(email):
-        """
-        Send greeting email to client.
-
-        Args:
-            email (str): Client email address.
-        """
-        print(f"Sending greeting email to {email}")
+        """Envia email de boas-vindas simples."""
+        print(f"Enviando email de saudação para {email}")
 
     def send_welcome(self, email, name):
-        """
-        Send welcome email with personalized message.
-
-        Args:
-            email (str): Client email address.
-            name (str): Client name.
-        """
-        print(f"Sending welcome email to {name} at {email}")
+        """Envia email de boas-vindas personalizado com nome do cliente."""
+        print(f"Enviando email de boas-vindas para {name} em {email}")
 
 
 def register_client(client):
     """
-    Register a new client in the system.
-
-    Args:
-        client (dict): Client data dictionary.
-
-    Returns:
-        bool: True if registration successful, False otherwise.
+    Fluxo completo de registro: valida, salva e envia email de saudação.
+    Retorna False se validação falhar.
     """
     validator = ClientValidator()
     repository = ClientRepository()

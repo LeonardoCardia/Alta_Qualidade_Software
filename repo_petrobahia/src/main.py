@@ -1,45 +1,36 @@
 """
-Main application module for the PetroBahia order processing system.
-
-This module serves as the entry point for the application, demonstrating
-the usage of the order processing system with sample data.
+Demonstração do sistema de pedidos e cálculo de preços.
+Usa dados de exemplo para testar fluxo completo.
 """
 
-from legacy.clients import load_clients
-from legacy.order_service import OrderService
+from legacy.clients import load_clients, register_client
+from legacy.order_service import process_order
+from legacy.price_calculator import calculate_final_price
 
 
 def main():
-    """
-    Main function to demonstrate the order processing system.
+    """Executa cenário de teste com cliente gold e lista de produtos."""
+    # Carrega clientes do arquivo
+    clients = load_clients("clientes.txt")
+    print("Clientes carregados:", clients)
 
-    This function loads client data, creates sample orders,
-    and displays order summaries.
-    """
-    # Load clients from file
-    clients = load_clients("src/clients.txt")
+    # Testa registro de novo cliente
+    new_client = {"name": "João Silva", "email": "joao@email.com", "tier": "gold"}
+    register_client(new_client)
 
-    # Initialize order service
-    order_service = OrderService()
+    # Processa pedido para cliente existente
+    if clients:
+        client = clients[0]
+        process_order(client, 100.0)
 
-    # Sample items for demonstration
-    sample_items = [
-        {"name": "Product A", "price": 100.0},
-        {"name": "Product B", "price": 50.0},
-        {"name": "Product C", "price": 75.0},
+    # Calcula preço final com múltiplos itens
+    items = [
+        {"name": "Produto A", "price": 50.0},
+        {"name": "Produto B", "price": 30.0},
+        {"name": "Produto C", "price": 20.0},
     ]
-
-    # Process orders for each client
-    print("=" * 60)
-    print("PETROBAHIA - Order Processing System")
-    print("=" * 60)
-    print()
-
-    for client in clients:
-        order = order_service.process_order(client, sample_items)
-        summary = order_service.generate_order_summary(order)
-        print(summary)
-        print("-" * 60)
+    final_price = calculate_final_price(items)
+    print(f"Preço final calculado: R$ {final_price:.2f}")
 
 
 if __name__ == "__main__":

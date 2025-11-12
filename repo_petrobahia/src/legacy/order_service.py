@@ -1,12 +1,4 @@
-"""
-Module for order processing and management.
-
-This module provides functionality to process customer orders
-with tier-based pricing.
-"""
-
 from legacy.price_calculator import PriceCalculator
-
 
 class OrderService:
     """
@@ -68,3 +60,21 @@ class OrderService:
         summary += f"Total: ${order['total']:.2f}\n"
 
         return summary
+
+def process_order(client, product_price):
+    """
+    Calcula preço final aplicando desconto por tier e exibe confirmação.
+    Clientes sem tier reconhecido pagam preço cheio.
+    """
+    if client["tier"] == "gold":
+        discount = 0.15
+    elif client["tier"] == "silver":
+        discount = 0.10
+    elif client["tier"] == "bronze":
+        discount = 0.05
+    else:
+        discount = 0.0
+
+    final_price = product_price * (1 - discount)
+    print(f"Pedido processado para {client['name']}: R$ {final_price:.2f}")
+    return final_price
