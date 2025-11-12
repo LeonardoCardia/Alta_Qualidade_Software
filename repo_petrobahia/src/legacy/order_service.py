@@ -1,62 +1,73 @@
-from legacy.price_calculator import calculate_price
+"""
+Module for order processing and management.
+
+This module provides functionality to process customer orders
+with tier-based pricing.
+"""
+
+from legacy.price_calculator import PriceCalculator
 
 
-class OrderValidator:
-    def validate(self, quantity):
-        if quantity == 0:
-            print("Quantity zero, returning 0")
-            return False
-        return True
+class OrderService:
+    """
+    Service class for processing and managing customer orders.
 
+    This class handles order creation, price calculation, and
+    order summary generation for customers.
+    """
 
-class VoucherService:
-    def apply_discount(self, price, voucher, product):
-        if voucher == "MEGA10":
-            return price - (price * 0.1)
-        elif voucher == "NOVO5":
-            return price - (price * 0.05)
-        elif voucher == "LUB2" and product == "lubricant":
-            return price - 2
-        else:
-            return price
-
-
-class PriceFormatter:
-    def format(self, price, product):
-        if product == "diesel":
-            return round(price, 0)
-        elif product == "gas":
-            return round(price, 2)
-        else:
-            return float(int(price * 100) / 100.0)
-
-
-class OrderProcessor:
     def __init__(self):
-        self.validator = OrderValidator()
-        self.voucher_service = VoucherService()
-        self.formatter = PriceFormatter()
-    
-    def process(self, order):
-        product = order.get("product")
-        quantity = order.get("quantity")
-        voucher = order.get("voucher")
-        
-        if not self.validator.validate(quantity):
-            return 0
-        
-        price = calculate_price(product, quantity)
-        if price < 0:
-            print("Error: negative price")
-            price = 0
-        
-        price = self.voucher_service.apply_discount(price, voucher, product)
-        price = self.formatter.format(price, product)
-        
-        print("Order OK:", order.get("client"), product, quantity, "=>", price)
-        return price
+        """Initialize the OrderService with a PriceCalculator instance."""
+        self.price_calculator = PriceCalculator()
 
+    def process_order(self, client, items):
+        """
+        Process an order for a client with given items.
 
-def process_order(order):
-    processor = OrderProcessor()
-    return processor.process(order)
+        Args:
+            client (dict): A dictionary containing client information
+                          with 'name' and 'tier' keys.
+            items (list): A list of dictionaries, each containing
+                         'name' and 'price' keys.
+
+        Returns:
+            dict: A dictionary containing order details with keys:
+                  'client_name', 'tier', 'items', 'total', and 'discount'.
+        """
+        total = sum(item['price'] for item in items)
+        discount_rate = self.price_calculator.get_discount_rate(client['tier'])
+        final_total = self.price_calculator.calculate_price(
+            total,
+            client['tier']
+        )
+
+        order = {
+            'client_name': client['name'],
+            'tier': client['tier'],
+            'items': items,
+            'total': final_total,
+            'discount': discount_rate
+        }
+
+        return order
+
+    def generate_order_summary(self, order):
+        """
+        Generate a formatted summary of an order.
+
+        Args:
+            order (dict): A dictionary containing order information.
+
+        Returns:
+            str: A formatted string containing the order summary.
+        """
+        summary = f"Order for {order['client_name']} ({order['tier']} tier)\n"
+        summary += "Items:\n"
+        
+        for item in order['items']:
+            summary += f"  - {item['name']}: ${item['price']:.2f}\n"
+        
+        summary += f"Discount: {order['discount'] * 100:.0f}%\n"
+        summary += f"Total: ${order['total']:.2f}\n"
+        
+        return summary

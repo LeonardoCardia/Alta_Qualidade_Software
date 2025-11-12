@@ -1,3 +1,46 @@
+"""
+Module for client data management.
+
+This module provides functionality to load and manage client information
+from text files.
+"""
+
+
+def load_clients(file_path):
+    """
+    Load client data from a text file.
+
+    Args:
+        file_path (str): Path to the file containing client data.
+
+    Returns:
+        list: A list of dictionaries containing client information.
+              Each dictionary has 'name', 'email', and 'tier' keys.
+
+    Raises:
+        FileNotFoundError: If the specified file does not exist.
+    """
+    clients = []
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                parts = line.strip().split(',')
+                if len(parts) == 3:
+                    client = {
+                        'name': parts[0].strip(),
+                        'email': parts[1].strip(),
+                        'tier': parts[2].strip()
+                    }
+                    clients.append(client)
+    except FileNotFoundError as exc:
+        raise FileNotFoundError(
+            f"Client file not found: {file_path}"
+        ) from exc
+    
+    return clients
+
+
 import re
 
 REGEX_EMAIL = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"

@@ -1,31 +1,142 @@
-# PetroBahia S.A.
+# PetroBahia Order Processing System
 
-A **PetroBahia S.A.** é uma empresa fictícia do setor de óleo e gás. Seu sistema interno calcula preços de combustíveis, valida clientes e gera relatórios. 
-O código está **mal estruturado** e **difícil de manter**. O objetivo é **refatorar** aplicando **PEP8**, **Clean Code** e **princípios SOLID** (SRP e OCP).
+A Python-based order processing system with tier-based pricing and discount management.
 
-## Objetivos
-- Melhorar legibilidade e clareza do código
-- Extrair funções e classes coesas
-- Eliminar duplicações e efeitos colaterais
-- Melhorar nomes e modularidade
+## Overview
 
-## Estrutura
+This system provides a comprehensive solution for managing customer orders with automatic discount calculation based on client tier levels. It includes client data management, price calculation, and order processing capabilities.
+
+## Features
+
+- Client data management from text files
+- Tier-based discount system (Gold, Silver, Bronze)
+- Automated price calculation with discount application
+- Order processing and summary generation
+- PEP8 compliant codebase
+
+## Project Structure
+
 ```
-src/
-├── main.py
-└── legacy/
-    ├── clientes.py
-    ├── pedido_service.py
-    └── preco_calculadora.py
+repo_petrobahia/
+├── src/
+│   ├── main.py                 # Main application entry point
+│   ├── clients.txt             # Client data file
+│   └── legacy/
+│       ├── clients.py          # Client data loader
+│       ├── price_calculator.py # Price calculation logic
+│       └── order_service.py    # Order processing service
+├── clientes.txt                # Additional client data
+└── README.md                   # This file
 ```
 
-## Instruções
-1. Leia o código legado.
-2. Liste os problemas encontrados.
-3. Refatore sem mudar o comportamento principal.
-4. Documente suas **decisões de design** neste README.
+## Installation
 
----
+### Prerequisites
 
-## DECISÕES DE DESIGN
-Descreva aqui as mudanças feitas e os motivos.
+- Python 3.8 or higher
+
+### Setup
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd repo_petrobahia
+```
+
+2. Ensure the client data file exists at `src/clients.txt`
+
+## Usage
+
+### Running the Application
+
+```bash
+python src/main.py
+```
+
+### Client Data Format
+
+The client data file should follow this format:
+```
+Client Name, email@example.com, tier
+```
+
+Example:
+```
+John Doe, john@example.com, gold
+Jane Smith, jane@example.com, silver
+Bob Johnson, bob@example.com, bronze
+```
+
+### Tier Discount Rates
+
+- Gold: 20% discount
+- Silver: 10% discount
+- Bronze: 5% discount
+
+## Code Examples
+
+### Loading Clients
+
+```python
+from legacy.clients import load_clients
+
+clients = load_clients('src/clients.txt')
+```
+
+### Processing an Order
+
+```python
+from legacy.order_service import OrderService
+
+order_service = OrderService()
+items = [
+    {'name': 'Product A', 'price': 100.0},
+    {'name': 'Product B', 'price': 50.0}
+]
+
+order = order_service.process_order(client, items)
+summary = order_service.generate_order_summary(order)
+print(summary)
+```
+
+### Calculating Prices
+
+```python
+from legacy.price_calculator import PriceCalculator
+
+calculator = PriceCalculator()
+final_price = calculator.calculate_price(100.0, 'gold')  # Returns 80.0
+```
+
+## Development
+
+### Code Standards
+
+This project follows PEP8 Python coding standards:
+- Maximum line length: 79 characters for code
+- Proper docstrings for all modules, classes, and functions
+- Consistent naming conventions
+- Proper whitespace and indentation
+
+### Testing
+
+To verify the implementation:
+
+```bash
+python src/main.py
+```
+
+## Contributing
+
+1. Create a feature branch from main
+2. Follow PEP8 coding standards
+3. Add appropriate documentation
+4. Submit a pull request
+
+## License
+
+This project is proprietary software for PetroBahia internal use.
+
+## Contact
+
+For questions or support, please contact the development team.
