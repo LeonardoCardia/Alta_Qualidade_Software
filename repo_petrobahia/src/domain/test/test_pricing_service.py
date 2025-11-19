@@ -1,11 +1,18 @@
-from domain.entities.produto import TipoProduto
+import sys
+import os
 import pytest
 
-from pathlib import Path
+# Adiciona o diretório domain ao Python path
+current_dir = os.path.dirname(__file__)  # C:\...\domain\test\
+domain_dir = os.path.dirname(current_dir) # C:\...\domain\
 
-Path(
-    
-)
+print(f"Diretório atual: {current_dir}")
+print(f"Diretório domain: {domain_dir}")
+
+sys.path.insert(0, domain_dir)
+
+# Agora importa normalmente
+from entities.produto import TipoProduto
 
 class TestPRICING_SERVICE():
     _BASE_PRICES = {
@@ -15,12 +22,16 @@ class TestPRICING_SERVICE():
         TipoProduto.LUBRIFICANTE: float("25.00"),
     }
 
-    @pytest.mark.parametrize("tipo_produto", "quantidade", "expected_output",
-                             [(TipoProduto.DIESEL, 5, 19.95),
-                              (TipoProduto.GASOLINA, 10, 51.9),
-                              (TipoProduto.ETANOL, 20, 71.8),
-                              (TipoProduto.LUBRIFICANTE, -5, -125)])
-    def test_calculate_price(self, tipo_produto: TipoProduto, quantidade: int, expected_output: float) -> float:
+    @pytest.mark.parametrize(
+        ["tipo_produto", "quantidade", "expected_output"],
+        [
+            (TipoProduto.DIESEL, 5, 19.95),
+            (TipoProduto.GASOLINA, 10, 51.9),
+            (TipoProduto.ETANOL, 20, 71.8),
+            (TipoProduto.LUBRIFICANTE, -5, -125.0),
+        ]
+    )
+    def test_calculate_price(self, tipo_produto: TipoProduto, quantidade: int, expected_output):
         
 
         base_price = self._BASE_PRICES.get(tipo_produto)
