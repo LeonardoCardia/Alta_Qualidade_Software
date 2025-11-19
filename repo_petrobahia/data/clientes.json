@@ -1,0 +1,26 @@
+[
+  {
+    "id": "4afe3a66-a89c-47ba-9359-e3600024bc72",
+    "nome": "TransLog",
+    "email": "contato@translog.com.br",
+    "cnpj": "12345678000190"
+  },
+  {
+    "id": "bcf513fc-721f-4183-9a52-699e6023da7f",
+    "nome": "MoveMais",
+    "email": "vendas@movemais.com",
+    "cnpj": "98765432000111"
+  },
+  {
+    "id": "9276c096-6485-4ffe-a524-695769427c6b",
+    "nome": "EcoFrota",
+    "email": "suporte@ecofrota.com.br",
+    "cnpj": "11223344000155"
+  },
+  {
+    "id": "e4682d86-6255-493d-8f40-41a1739bbfdb",
+    "nome": "PetroPark",
+    "email": "comercial@petropark.com",
+    "cnpj": "55667788000199"
+  }
+]
