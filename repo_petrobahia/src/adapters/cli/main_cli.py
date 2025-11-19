@@ -83,7 +83,7 @@ class PetroBahiaCLI:
                 "cliente_id": "1",
                 "tipo_produto": "diesel",
                 "quantidade": 1200,
-                "cupom": Cupom.MEGA10.value,
+                "cupom": Cupom.MEGA10.value.codigo,
             },
             {
                 "id": "ORD002",
@@ -97,14 +97,14 @@ class PetroBahiaCLI:
                 "cliente_id": "3",
                 "tipo_produto": "etanol",
                 "quantidade": 50,
-                "cupom": Cupom.NOVO5.value,
+                "cupom": Cupom.NOVO5.value.codigo,
             },
             {
                 "id": "ORD004",
                 "cliente_id": "4",
                 "tipo_produto": "lubrificante",
                 "quantidade": 12,
-                "cupom": Cupom.LUB2.value,
+                "cupom": Cupom.LUB2.value.codigo,
             },
         ]
 
