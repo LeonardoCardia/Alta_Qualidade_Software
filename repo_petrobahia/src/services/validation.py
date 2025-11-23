@@ -32,7 +32,7 @@ class ClientValidator(IClientValidator):
             raise ValueError("O email do cliente não pode estar vazio")
 
         if not self._email_validator.is_valid(client.email):
-            raise ValueError(f"Formato de email inválido: {client.email}")
+            raise ValueError("Formato de email inválido")
 
         if not client.tier or not client.tier.strip():
             raise ValueError("O nível do cliente não pode estar vazio")
