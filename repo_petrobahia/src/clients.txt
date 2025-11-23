@@ -1,4 +1,0 @@
-{'Name': 'Ana Paula', 'Email': 'ana@@petrobahia', 'CNPJ': '123'}
-{'Name': 'Carlos', 'Email': 'carlos@petrobahia.com', 'CNPJ': '456'}
-{'Name': 'Ana Paula', 'Email': 'ana@@petrobahia', 'CNPJ': '123'}
-{'Name': 'Carlos', 'Email': 'carlos@petrobahia.com', 'CNPJ': '456'}

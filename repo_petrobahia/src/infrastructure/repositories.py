@@ -11,8 +11,19 @@ class FileClientRepository(IClientRepository):
         """Inicializa o repositório de clientes."""
         self._file_path = file_path
 
+    def exists(self, email: str) -> bool:
+        """Verifica se um cliente com o email já existe."""
+        try:
+            clients = self.load_all()
+            return any(client.email == email for client in clients)
+        except FileNotFoundError:
+            return False
+
     def save(self, client: Client) -> None:
         """Salva o cliente no arquivo em formato CSV."""
+        if self.exists(client.email):
+            raise ValueError(f"Cliente com email {client.email} já está cadastrado")
+        
         with open(self._file_path, "a", encoding="utf-8") as file:
             line = f"{client.name},{client.email},{client.tier}\n"
             file.write(line)

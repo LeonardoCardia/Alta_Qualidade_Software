@@ -11,10 +11,7 @@ Um sistema profissional de gerenciamento de pedidos em Python seguindo os princ�
 - [Funcionalidades](#funcionalidades)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Instalação](#instalação)
-- [Uso](#uso)
 - [Testes](#testes)
-- [Qualidade de Código](#qualidade-de-código)
-- [Desenvolvimento](#desenvolvimento)
 
 ## Visão Geral
 
@@ -121,7 +118,8 @@ Módulos de alto nível dependem de abstrações:
 ## Funcionalidades
 
 ### Funcionalidades de Negócio
-- Registro de clientes com validação
+- Registro de clientes com validação completa
+- Prevenção de clientes duplicados (validação por email único)
 - Sistema de desconto baseado em nível (Gold: 20%, Silver: 10%, Bronze: 5%)
 - Descontos baseados em quantidade (10+ itens: 20%, 5-9 itens: 10%)
 - Cálculo de impostos (taxa configurável)
@@ -204,6 +202,33 @@ Nome do Cliente,email@example.com,nivel
 Ana Paula,ana@petrobahia.com,silver
 Carlos Silva,carlos@petrobahia.com,gold
 ```
+
+## Uso
+
+### Executando o Sistema
+
+Execute o sistema de demonstração:
+
+```bash
+cd repo_petrobahia
+python src/main.py
+```
+
+O sistema irá:
+1. Carregar clientes existentes do arquivo `clientes.txt`
+2. Registrar novos clientes (validando duplicatas por email)
+3. Processar pedidos com cálculo automático de descontos
+4. Calcular preços finais com impostos
+
+### Validação de Clientes
+
+O sistema implementa validação robusta de clientes:
+
+- **Email único**: Não permite cadastro de clientes com emails duplicados
+- **Formato de email**: Valida o formato do email usando regex (padrão RFC)
+- **Campos obrigatórios**: Nome, email e nível são obrigatórios e não podem estar vazios
+- **Validação de nível**: Aceita gold, silver, bronze (case-insensitive)
+- **Mensagens de erro**: Retorna mensagens claras quando a validação falha
 
 ### Taxas de Desconto por Nível
 
@@ -302,9 +327,3 @@ A arquitetura refatorada mantém o desempenho enquanto melhora a manutenibilidad
 - **Operações de Arquivo**: Otimizadas com context managers
 - **Cálculos de Desconto**: O(1) - Buscas em dicionário
 - **Execução de Testes**: <1s para a suíte completa
-
-## Reconhecimentos
-
-Este projeto de refatoração demonstra práticas profissionais de engenharia de software incluindo arquitetura limpa, princípios SOLID, testes abrangentes e fluxos de trabalho modernos de desenvolvimento Python.
-
-

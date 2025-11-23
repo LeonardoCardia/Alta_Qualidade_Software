@@ -12,6 +12,11 @@ class ClientReader(ABC):
         """Carrega todos os clientes do armazenamento."""
         ...
 
+    @abstractmethod
+    def exists(self, email: str) -> bool:
+        """Verifica se um cliente com o email já existe."""
+        ...
+
 
 class ClientWriter(ABC):
     """Interface para escrita de dados de clientes."""

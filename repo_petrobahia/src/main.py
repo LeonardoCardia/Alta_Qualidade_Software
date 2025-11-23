@@ -1,14 +1,3 @@
-"""
-Demonstração do sistema de gerenciamento de pedidos usando arquitetura refatorada.
-
-Este módulo exemplifica a implementação dos princípios SOLID com:
-- Responsabilidade Única: Cada classe tem um propósito claro
-- Aberto/Fechado: Extensível sem modificação
-- Substituição de Liskov: Interfaces são implementadas adequadamente
-- Segregação de Interface: Interfaces pequenas e focadas
-- Inversão de Dependência: Depende de abstrações, não de implementações
-"""
-
 from domain.entities import Client, OrderItem
 from infrastructure.repositories import FileClientRepository
 from services.discount import QuantityDiscountCalculator, TierDiscountCalculator
@@ -60,14 +49,21 @@ def main():
         clients = []
     print()
 
-    # Cenário 2: Registrar novo cliente
-    print("2. Registrando novo cliente...")
-    try:
-        new_client = Client(name="João Silva", email="joao@email.com", tier="gold")
-        register_client_use_case.execute(new_client)
-        print(f"   Cliente {new_client.name} registrado com sucesso!")
-    except ValueError as e:
-        print(f"   Falha no registro: {e}")
+    # Cenário 2: Registrar novos clientes
+    print("2. Registrando novos clientes...")
+    novos_clientes = [
+        Client(name="João Silva", email="joao@email.com", tier="gold"),
+        Client(name="Maria Santos", email="maria@email.com", tier="silver"),
+        Client(name="Pedro Costa", email="pedro@email.com", tier="bronze"),
+        Client(name="Fernanda Lima", email="fernanda@email.com", tier="gold"),
+    ]
+    
+    for new_client in novos_clientes:
+        try:
+            register_client_use_case.execute(new_client)
+            print(f"Cliente {new_client.name} registrado com sucesso!")
+        except ValueError as e:
+            print(f"Falha no registro de {new_client.name}: {e}")
     print()
 
     # Cenário 3: Processar pedido para cliente existente
