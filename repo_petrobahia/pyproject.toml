@@ -50,6 +50,7 @@ addopts = [
     "-v",
     "--strict-markers",
     "--cov=src",
+    "--cov-omit=src/legacy/*",
     "--cov-report=term-missing",
     "--cov-report=html",
 ]

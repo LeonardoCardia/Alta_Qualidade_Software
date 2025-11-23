@@ -26,15 +26,15 @@ class ClientValidator(IClientValidator):
     def validate(self, client: Client) -> bool:
         """Valida os dados do cliente."""
         if not client.name or not client.name.strip():
-            raise ValueError("O nome do cliente é obrigatório")
+            raise ValueError("O nome do cliente não pode estar vazio")
 
         if not client.email or not client.email.strip():
-            raise ValueError("O email do cliente é obrigatório")
+            raise ValueError("O email do cliente não pode estar vazio")
 
         if not self._email_validator.is_valid(client.email):
-            raise ValueError(f"Formato de email inválido: {client.email}")
+            raise ValueError("Formato de email inválido")
 
         if not client.tier or not client.tier.strip():
-            raise ValueError("O nível do cliente é obrigatório")
+            raise ValueError("O nível do cliente não pode estar vazio")
 
         return True
