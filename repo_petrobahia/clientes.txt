@@ -1,7 +1,3 @@
 Ana Paula,ana@petrobahia.com,silver
 Carlos Silva,carlos@petrobahia.com,gold
 João Silva,joao@email.com,gold
-João Silva,joao@email.com,gold
-João Silva,joao@email.com,gold
-João Silva,joao@email.com,gold
-João Silva,joao@email.com,gold
