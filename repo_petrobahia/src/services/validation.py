@@ -35,6 +35,6 @@ class ClientValidator(IClientValidator):
             raise ValueError(f"Formato de email inválido: {client.email}")
 
         if not client.tier or not client.tier.strip():
-            raise ValueError("O nível do cliente é obrigatório")
+            raise ValueError("O nível do cliente não pode estar vazio")
 
         return True
